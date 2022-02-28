@@ -1,9 +1,6 @@
 <?php
 
 //--------------------scrapping proxies-------------------//
-$dir = dirname(__FILE__);
-$checker = $_SERVER['HTTP_HOST'].'/'.explode('htdocs\\', $dir)[1].'/checker.php';
-$checker = str_replace('\\','/',$checker);
 
 $pages = array(file_get_contents('https://www.us-proxy.org/'), file_get_contents('https://free-proxy-list.net/'));
 $allpages = implode("", $pages);
@@ -18,7 +15,7 @@ foreach($proxies as $key => $proxy){
     $name = 'ch'.$key;
     $$name = curl_init();
     curl_setopt_array($$name, array(
-        CURLOPT_URL => $checker.'?proxy='.$proxy.'&timeout=10',
+        CURLOPT_URL => 'checker.php'.'?proxy='.$proxy.'&timeout=10', // The url is just crated for the purpose of example. instead of the string 'checker.php' it should  be the path of the file checker.php that I have included in the repo.
         CURLOPT_RETURNTRANSFER => true
     ));
     curl_multi_add_handle($mh, $$name);
